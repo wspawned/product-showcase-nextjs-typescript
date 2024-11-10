@@ -27,3 +27,7 @@ export interface SelectableAttribute {
   name: string;
   values: string[];
 }
+
+export interface ProductInfoSelectables {
+  [key: string]: string[];
+}
