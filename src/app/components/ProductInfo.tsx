@@ -8,6 +8,7 @@ import { IoMdStar } from "react-icons/io";
 import { MdOutlineLocalShipping } from "react-icons/md";
 import Modal from "./Modal";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
+import toast, { Toaster } from 'react-hot-toast';
 
 const ProductInfo:React.FC<{data: ProductData, selectedVariant: ProductVariant | null, setSelectedVariant: React.Dispatch<React.SetStateAction<ProductVariant | null>>}> = (
   {data, selectedVariant, setSelectedVariant}
@@ -30,11 +31,13 @@ const ProductInfo:React.FC<{data: ProductData, selectedVariant: ProductVariant |
       e.target.value = minQuantity.toString();
       setQuantity(minQuantity);
       setTotalPrice(formatPrice(minQuantity*(getBaremPrice(minQuantity, baremList) ?? 0)));
+      toast.error(`Adet ${minQuantity}'den büyük olmalıdır.`);
       return
     } else if (newQuantity > maxQuantity){
       e.target.value = maxQuantity.toString();
       setQuantity(maxQuantity);
       setTotalPrice(formatPrice(maxQuantity*(getBaremPrice(maxQuantity, baremList) ?? 0)));
+      toast.error(`Adet ${maxQuantity}'den küçük olmalıdır.`);
       return
     }
     setQuantity(newQuantity);
@@ -259,6 +262,8 @@ const ProductInfo:React.FC<{data: ProductData, selectedVariant: ProductVariant |
         </Modal> :
         null
       }
+
+      <Toaster />
     </div>
   );
 };
