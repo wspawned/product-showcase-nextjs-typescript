@@ -1,5 +1,3 @@
-"use client"
-
 import {ProductData, BaremList, SelectableAttribute, ProductInfoSelectables, ProductVariant, Attribute} from "@/types/models";
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
