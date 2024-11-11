@@ -25,16 +25,24 @@ const ProductPhotos:React.FC<{data: ProductData, selectedVariant: ProductVariant
     setDisplayPhoto(src);
   }
 
+  const loadingSpinner = () => (
+    <div className="w-[100px] h-[100px] lg:w-[150px] lg:h-[150px] border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin m-auto mt-[100px] lg:mt-[150px]"></div>
+  );
+
   const displayArea = useMemo(() => (
     <div className="w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] mt-6 md:mt-0">
-      {displayPhoto && <Image
+      {displayPhoto ? (
+        <Image
         src={displayPhoto}
         alt="Displayed Photo"
         width={600}
         height={600}
         className="w-full h-full object-contain"
         priority={true}
-      />}
+      />
+      ):(
+        loadingSpinner()
+      )}
     </div>
   ), [displayPhoto]);
 
