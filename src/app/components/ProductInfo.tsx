@@ -4,6 +4,8 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import formatPrice from "../hooks/formatPrice";
 import getBaremPrice from "../hooks/getBaremPrice";
 import Button from "./Button";
+import { IoMdStar } from "react-icons/io";
+import { MdOutlineLocalShipping } from "react-icons/md";
 
 const ProductInfo:React.FC<{data: ProductData, selectedVariant: ProductVariant | null, setSelectedVariant: React.Dispatch<React.SetStateAction<ProductVariant | null>>}> = (
   {data, selectedVariant, setSelectedVariant}
@@ -138,24 +140,41 @@ const ProductInfo:React.FC<{data: ProductData, selectedVariant: ProductVariant |
     }
   }
 
+  const ratings = () => (
+    <div className="flex w-full items-start lg:ml-6">
+      {[...Array(5)].map((_, index) => (
+      <IoMdStar key={index} color="orange" fontSize="25px"/>
+      ))}
+      <p className="text-lg lg:text-xl ml-2 lg:ml-4 text-blue-500" >23 Yorum</p>
+    </div>
+  );
+
+  const shipping = () => (
+    <div className="flex w-full items-start mt-1 lg:ml-[200px]">
+      <MdOutlineLocalShipping color="gray" fontSize="30px"/>
+      <p className="text-xl lg:text-xl ml-2 lg:ml-4 " >Kargo ücreti: <span className="text-blue-500">{"Alıcı Öder"}</span></p>
+    </div>
+  )
+
   return (
     <div className='flex flex-col w-full md:w-3/5 md:h-min[850px] gap-2 md:p-4 md:pl-8 text-gray-800'>
       <h1 className='text-2xl md:text-3xl lg:text-4xl font-semibold lg:ml-6'>{productTitle}</h1>
-      <p className='text-2xl lg:text-3xl font-bold mt-4 lg:mt-6 lg:ml-6'>
+      {ratings()}
+      <p className='text-2xl lg:text-3xl font-bold mt-2 lg:mt-6 lg:ml-6'>
         {formatPrice(minPrice)} - {formatPrice(maxPrice)}
         <span className='text-xl lg:text-2xl text-gray-500 font-normal'> / Adet</span>
       </p>
       <p className='text-xl lg:text-2xl text-gray-500 lg:ml-6'>{minQuantity} Adet (Minimum Sipariş Adedi)</p>
 
       {selectableAttributes && selectableAttributes?.length > 0 && (selectableAttributes.map((item: SelectableAttribute, index: number) => (
-        <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 mt-4 lg:mt-6 lg:pl-6" key={index}>
+        <div className="flex flex-col lg:flex-row gap-2 lg:gap-8 mt-2 lg:mt-6 lg:pl-6" key={index}>
           <div className="flex lg:justify-between items-center">
-            <p className="lg:w-[130px] text-xl">{item.name}</p>
-            <p className="text-xl">:</p>
+            <p className="lg:w-[130px] text-lg lg:text-xl">{item.name}</p>
+            <p className="text-lg lg:text-xl">:</p>
           </div>
           <div className="grid grid-cols-3 w-full gap-4 text-center">{item.values.map((value: string, index: number) => (
             <p
-              className={`text-xl p-2 border-2 border-grey-200 rounded
+              className={`text-lg lg:text-xl p-1 lg:p-2 border-2 border-grey-200 rounded
                 ${selectedValues && selectedValues[item.name] === value && "border-gray-600 cursor-pointer"}
                 ${(selectables[item.name] && !selectables[item.name].includes(value)) ? "bg-gray-200 cursor-default" : "cursor-pointer"}
               `}
@@ -166,17 +185,17 @@ const ProductInfo:React.FC<{data: ProductData, selectedVariant: ProductVariant |
         </div>
       )))}
 
-      <div className="flex flex-col bg-gray-100 gap-4 lg:gap-8 p-2 md:p-6 mt-2 md:mt-6">
+      <div className="flex flex-col bg-gray-100 gap-4 md:gap-8 p-2 md:p-6 mt-4 md:mt-6">
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 ">
           <div className="flex lg:justify-between">
-            <p className="lg:w-[130px] text-xl">Toptan Fiyat <br /> (Adet)</p>
-            <p className="text-xl text-center">:</p>
+            <p className="lg:w-[130px] text-lg lg:text-xl">Toptan Fiyat <br /> (Adet)</p>
+            <p className="text-lg lg:text-xl text-center">:</p>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 w-full gap-4 text-center">
             {baremList.map((item: BaremList, index) => (
               <div className={`
-                flex flex-col text-xl ${(index + 1) % 4 === 0 ? '' : 'border-r-2'} border-gray-400
+                flex flex-col text-lg lg:text-xl ${(index + 1) % 4 === 0 ? '' : 'border-r-2'} border-gray-400
                 ${quantity && quantity >= item.minimumQuantity && quantity <= item.maximumQuantity && `bg-amber-200`}
                 `} key={index}>
                 <p>{item.minimumQuantity} {item.maximumQuantity === maxQuantity ? ` +` : `- ${item.maximumQuantity}`}</p>
@@ -188,12 +207,12 @@ const ProductInfo:React.FC<{data: ProductData, selectedVariant: ProductVariant |
 
         <div className="flex flex-col lg:flex-row lg:items-center">
           <div className="flex flex-row items-center">
-            <div className="flex text-xl items-center">
-              <label htmlFor="quantityInput" className="text-xl lg:w-[130px]">Adet</label>
-              <p className="text-xl text-center">:</p>
+            <div className="flex text-lg lg:text-xl items-center">
+              <label htmlFor="quantityInput" className="text-lg lg:text-xl lg:w-[130px]">Adet</label>
+              <p className="text-lg lg:text-xl text-center">:</p>
             </div>
             <input
-              className="text-xl text-center w-[80px] lg:w-[100px] ml-2 lg:ml-8 p-1 lg:p-2
+              className="text-lg lg:text-xl text-center w-[80px] lg:w-[100px] ml-2 lg:ml-8 p-1 lg:p-2
               [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none 
               [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
               id="quantityInput"
@@ -202,9 +221,9 @@ const ProductInfo:React.FC<{data: ProductData, selectedVariant: ProductVariant |
               onChange={() => setQuantity(null)}
               onBlur={(e: React.FocusEvent<HTMLInputElement>) => onQuantityChange(e)}
             />
-            <p className="text-xl ml-4" >Adet</p>
+            <p className="text-lg lg:text-xl ml-4" >Adet</p>
           </div>
-          <p className="text-xl ml-auto text-green-500 bg-white p-2 rounded my-4 md:my-0 mr-2 md:mr-0 md:mt-4 lg:mt-0" >Stok Adeti: {maxQuantity}</p>
+          <p className="text-lg lg:text-xl ml-auto text-green-500 bg-white p-2 rounded my-4 md:my-0 mr-2 md:mr-0 md:mt-4 lg:mt-0" >Stok Adeti: {maxQuantity}</p>
         </div>
       </div>
 
@@ -214,10 +233,15 @@ const ProductInfo:React.FC<{data: ProductData, selectedVariant: ProductVariant |
         <p className="text-2xl lg:text-4xl ml-auto lg:ml-8">{totalPrice}</p>
       </div>
 
-      <Button
-      disabled={!(selectedValues !== null && selectedValues !== undefined && Object.keys(allSelectables).length === Object.keys(selectedValues).length)}
-      onClick={addToCart}
-      />
+      {shipping()}
+
+      <div className="flex flex-col-reverse lg:flex-row w-full lg:items-center" >
+        <Button
+          disabled={!(selectedValues !== null && selectedValues !== undefined && Object.keys(allSelectables).length === Object.keys(selectedValues).length)}
+          onClick={addToCart}
+        />
+        <p className="text-lg lg:text-xl text-blue-500 mb-2 lg:w-[300px] lg:mr-[160px]">{"Ödeme Seçenekleri"}</p>
+      </div>
     </div>
   );
 };
