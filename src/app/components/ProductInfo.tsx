@@ -6,6 +6,8 @@ import getBaremPrice from "../hooks/getBaremPrice";
 import Button from "./Button";
 import { IoMdStar } from "react-icons/io";
 import { MdOutlineLocalShipping } from "react-icons/md";
+import Modal from "./Modal";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
 
 const ProductInfo:React.FC<{data: ProductData, selectedVariant: ProductVariant | null, setSelectedVariant: React.Dispatch<React.SetStateAction<ProductVariant | null>>}> = (
   {data, selectedVariant, setSelectedVariant}
@@ -128,6 +130,9 @@ const ProductInfo:React.FC<{data: ProductData, selectedVariant: ProductVariant |
     }
   }, [searchParams]);
 
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const closeModal = () => {setShowModal(false)};
+
   const addToCart = () => {
     if(selectedValues && quantity && Object.keys(allSelectables).length === Object.keys(selectedValues).length){
       const id = selectedVariant?.id;
@@ -135,6 +140,8 @@ const ProductInfo:React.FC<{data: ProductData, selectedVariant: ProductVariant |
       console.log("id >> ", id);
       console.log("adet >> ", quantity);
       console.log("barem >> ", resultBarem);
+
+      setShowModal(true);
     } else {
       return
     }
@@ -242,6 +249,16 @@ const ProductInfo:React.FC<{data: ProductData, selectedVariant: ProductVariant |
         />
         <p className="text-lg lg:text-xl text-blue-500 mb-2 lg:w-[300px] lg:mr-[160px]">{"Ödeme Seçenekleri"}</p>
       </div>
+
+      {showModal ?
+        <Modal closeModal={closeModal}>
+          <div className="flex flex-col mx-auto p-4 bg-gray-300 rounded justify-center items-center w-[300px] h-[200px] gap-6">
+            <IoCheckmarkCircleOutline color="green" fontSize="50px"/>
+            <p className="text-gray-700">{"Başarılı bir şekilde sepete eklendi."}</p>
+          </div>
+        </Modal> :
+        null
+      }
     </div>
   );
 };
