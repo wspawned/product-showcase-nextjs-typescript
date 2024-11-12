@@ -127,6 +127,8 @@ const ProductInfo:React.FC<{data: ProductData, selectedVariant: ProductVariant |
         attr => variant.attributes.some(vAttr => vAttr.name === attr.name && vAttr.value === attr.value)
       )) || null;
       setSelectedVariant(newSelectedVariant);
+    } else {
+      setSelectedVariant(null);
     }
   }, [searchParams]);
 

@@ -1,25 +1,21 @@
 import { ProductData, ProductVariant } from "@/types/models"
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from 'next/navigation';
 
 const ProductPhotos:React.FC<{data: ProductData, selectedVariant: ProductVariant | null}> = ({data, selectedVariant}) => {
   const [photoList, setPhotoList] = useState<string[] | null>(null);
   const [displayPhoto, setDisplayPhoto] = useState<string | null>(null);
-  const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
+  const allPhotos = [...new Set(data.productVariants.map(item => item.images).flat())];
 
   useEffect(() => {
-    if(params.size === data.selectableAttributes.length || selectedVariant){
-      if(selectedVariant){
+    if(selectedVariant){
         setPhotoList(selectedVariant.images);
         setDisplayPhoto(selectedVariant.images[0]);
-      }
     } else {
-      setPhotoList(data.productVariants[0].images);
-      setDisplayPhoto(data.productVariants[0].images[0]);
+      setPhotoList(allPhotos);
+      setDisplayPhoto(allPhotos[0]);
     }
-  }, [selectedVariant, searchParams]);
+  }, [selectedVariant]);
 
   const showInDisplay = (src: string) => {
     setDisplayPhoto(src);
@@ -47,9 +43,9 @@ const ProductPhotos:React.FC<{data: ProductData, selectedVariant: ProductVariant
   ), [displayPhoto]);
 
   const thumbnailArea = useMemo(() => (
-    <div className="grid grid-cols-4 w-full mb-5 md:mb-16 mx-auto mt-6 md:mt-16 lg:mt-0">
+    <div className="flex overflow-x-auto w-full mb-5 md:mb-16 mx-auto mt-6 md:mt-16 lg:mt-0 space-x-[9px] md:space-x-[11px] lg:space-x-[30px]">
       {photoList && photoList.map((photo: string, index: number) => (
-        <div className={`w-[70px] h-[70px] md:w-[60px] md:h-[60px] lg:w-[120px] lg:h-[120px] border-2 border-gray-300 hover:cursor-pointer mx-auto ${photo === displayPhoto && "md:border-4 border-gray-600"}`}
+        <div className={`min-w-[70px] min-h-[70px] md:min-w-[60px] md:min-h-[60px] lg:min-w-[120px] lg:min-h-[120px] border-2 border-gray-300 hover:cursor-pointer mx-auto ${photo === displayPhoto && "md:border-4 border-gray-600"}`}
           key={index}
           onClick={() => showInDisplay(photo)}
         >
