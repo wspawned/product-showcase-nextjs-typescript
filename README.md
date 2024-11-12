@@ -12,10 +12,10 @@ Projenin AWS Amplify üzerinden deploy edilmiş haline linkten ulaşılabilir.
 
 [Demo Linki](https://main.di1kt0xc5almy.amplifyapp.com/)
 
-![1](https://github.com/user-attachments/assets/9277b359-8c1a-4052-a15b-6ff0ba1abe43)
+![1a](https://github.com/user-attachments/assets/7a4b48ca-e3a1-4943-885f-dde6c1eb0717)
 
-![2](https://github.com/user-attachments/assets/fdb253f1-b0b1-4d5f-885d-8715463b3da7)
+![2a](https://github.com/user-attachments/assets/41030864-eb30-48ef-a13b-069824ef1f97)
 
-![4](https://github.com/user-attachments/assets/12781055-ab4c-486e-847c-7bd5d3096ef4)
+![3a](https://github.com/user-attachments/assets/f2461fe2-d076-4255-bc77-c17d895d322c)
 
 ![3](https://github.com/user-attachments/assets/951a7de3-9e3a-4788-9d01-8fafa954615b)
